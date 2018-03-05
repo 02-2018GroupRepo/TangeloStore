@@ -1,5 +1,9 @@
 package com.company;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -28,10 +32,52 @@ public class Main {
         }
 //        homeDepot.addToAvailableItems(rake, 0);
 //        homeDepot.getAvailableProducts();
-        homeDepot.addToCart(hammer, 2);
-        homeDepot.addToCart(drill, 3);
-        homeDepot.addToCart(flathead, 6);
-        homeDepot.addToCart(rake, 3);
-        homeDepot.getCart();
+        BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+        try{System.out.println("Which items do you want to add to your cart?\n");
+            homeDepot.showAvailableProducts();
+            String inputKey = console.readLine();
+            System.out.println("How many do you want of this item?");
+            String inputQuantity = console.readLine();
+            Integer value = Integer.parseInt(inputQuantity);
+            homeDepot.getAvailableItems().forEach((key,value) ->{
+              if (key.getName().equalsIgnoreCase(inputKey) ){
+                  homeDepot.addToCart(key,);
+              }
+            });
+
+
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }finally {
+            try {
+                console.close();
+            } catch (Exception e) {
+            }
+            console = null;
+        }
+
+//        System.out.println("These items are in your cart:");
+//        homeDepot.addToCart(hammer, 2);
+//        homeDepot.addToCart(drill, 3);
+//        homeDepot.addToCart(flathead, 6);
+//        homeDepot.addToCart(rake, 3);
+//        homeDepot.showCart();
+//
+//        System.out.println("\n These items are available to purchase:");
+//        homeDepot.showAvailableProducts();
+//        System.out.println("Ends here");
+//
+//        System.out.println("");
+//
+//        homeDepot.removeItemFromCart(hammer);
+//
+//        System.out.println("You have successfully removed this item from your cart.");
+//        homeDepot.showCart();
+//
+//        System.out.println("");
+//        System.out.println("These items are available to purchase:");
+//
+//        homeDepot.showAvailableProducts();
     }
 }

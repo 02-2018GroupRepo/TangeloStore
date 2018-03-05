@@ -18,10 +18,13 @@ public class Store {
     }
 
     public void addToCart(Product key, Integer customerQuantity) {
-        if (availableItems.get(key) == null || availableItems.get(key) == 0) {
-            System.out.println("Item out of stock.");
+        if (availableItems.get(key) == null){
+            System.out.println(key.getName() + " is not available.");
+        }
+        else if (availableItems.get(key) == 0) {
+            System.out.println(key.getName() + " is out of stock.");
         } else if (availableItems.get(key) < customerQuantity) {
-            System.out.println("Only have " + availableItems.get(key) + " in stock.");
+            System.out.println("Only have " + availableItems.get(key) + " in stock of " + key.getName());
         } else {
             this.cart.put(key, customerQuantity);
             Integer itemCount = availableItems.get(key) - customerQuantity;
@@ -29,19 +32,28 @@ public class Store {
         }
     }
 
-    public void getCart() {
+    public void showCart() {
         this.cart.forEach((key, value) -> {
-            System.out.println(key.getName() + "\n" +
-                    "\tPrice: " + key.getPrice() + "\n" +
-                    "\tQTY: " + value + "\n----------------"
+            System.out.printf(key.getName() + "\n" +
+                    "\tPrice: " + "%.2f" + "\n" +
+                    "\tQTY: " + value + "\n----------------\n", key.getPrice()
                 );
         });
     }
 
-    public void getAvailableProducts() {
+    public void showAvailableProducts() {
         this.availableItems.forEach((key, value) -> {
             System.out.println(key.getName() + "\tQTY: " + value);
         });
     }
 
+    public Map<Product, Integer> getAvailableItems() {
+        return availableItems;
+    }
+
+    public void removeItemFromCart (Product key){
+        Integer quantityToAddBack = availableItems.get(key) + this.cart.get(key);
+        availableItems.replace(key, quantityToAddBack);
+        this.cart.remove(key);
+            }
 }
